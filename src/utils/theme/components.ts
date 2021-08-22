@@ -15,12 +15,23 @@ const Card = {
       paddingRight: 4,
       boxShadow: "xl",
       width: "250px",
+      position: "fixed",
+      height: "100vh",
     },
     smooth: {
       padding: 6,
       borderRadius: "base",
       boxShadow: "md",
     },
+    topbar: ({ colorMode }) => ({
+      height: "75px",
+      width: "100%",
+      padding: 4,
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    }),
     nav: ({ colorMode }) => ({
       display: "flex",
       flexDirection: "row",
@@ -77,7 +88,81 @@ const Text = {
   },
 };
 
+const Input = {
+  // The styles all Card have in common
+  baseStyle: {
+    fontSize: "12px",
+  },
+  variants: {
+    search: ({ colorMode }) => ({
+      field: {
+        height: "40px",
+        borderRadius: "md",
+        width: "600px",
+        background: `background.${colorMode}.1`,
+        padding: 2,
+        paddingLeft: 10,
+        color: `text.${colorMode}.primary`,
+      },
+    }),
+  },
+  // The default variant value
+  defaultProps: {
+    variant: "search",
+  },
+};
+
+const MenuButton = {
+  // The styles all Card have in common
+  baseStyle: {
+    background: "none",
+    outline: "none",
+  },
+  variant: {
+    avatar: ({ colorMode }) => ({
+      background: `background.${colorMode}.card`,
+      __focus: {
+        boxShadow: "none",
+      },
+    }),
+  },
+  defaultProps: {
+    variant: "avatar",
+  },
+};
+
+const Menu = {
+  // The styles all Card have in common
+  parts: ["menu", "item"],
+  baseStyle: ({ colorMode }) => ({
+    menu: {
+      boxShadow: "lg",
+      rounded: "md",
+      flexDirection: "column",
+      background: `background.${colorMode}.card`,
+    },
+    item: {
+      fontWeight: "medium",
+      lineHeight: "normal",
+      color: `text.${colorMode}.secondary`,
+      background: `background.${colorMode}.card`,
+      __hover: {
+        background: `background.${colorMode}.1`,
+      },
+    },
+  }),
+
+  variants: {},
+
+  defaultProps: {
+    variant: "default",
+  },
+};
+
 export const components = {
   Card,
   Text,
+  Input,
+  MenuButton,
+  Menu,
 };
