@@ -17,6 +17,9 @@ export const theme: Theme = extendTheme({
       body: {
         background: `background.${colorMode}.main`,
       },
+      ul: {
+        background: `background.${colorMode}.card`,
+      },
     }),
   },
 });
