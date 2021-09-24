@@ -1,19 +1,24 @@
 import {
-  Flex,
   Box,
+  Button,
+  Flex,
   FormControl,
   FormLabel,
-  Input,
-  Checkbox,
-  Stack,
-  Link,
-  Button,
   Heading,
+  Input,
+  Link,
+  Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
-export default function Login() {
+export default function Reset() {
+  const [newpassword,setNewPassword] = useState<string>("");
+  const [cnfPassword,setCnfPassword] = useState<string>("");
+  const reset = () =>{
+    console.log(newpassword,cnfPassword);
+  }
   return (
     <Flex
       minH={"100vh"}
@@ -30,28 +35,22 @@ export default function Login() {
         <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
           <Stack spacing={4}>
             <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <FormLabel>New Password</FormLabel>
+              <Input type="password" placeholder="Enter new password" onChange={(e) => setNewPassword(e.target.value)} required/>
             </FormControl>
             <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <FormLabel>Confirm Password</FormLabel>
+              <Input type="password" placeholder="Confirm new password" onChange={(e) => setCnfPassword(e.target.value)} required/>
             </FormControl>
             <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
-              </Stack>
               <Button
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{
                   bg: "blue.500",
-                }}>
-                Sign in
+                }}
+                onClick ={reset}>
+                Reset
               </Button>
             </Stack>
           </Stack>

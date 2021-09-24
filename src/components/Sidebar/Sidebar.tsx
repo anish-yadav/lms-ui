@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useLocation } from "react-router";
 import {
   IconButton,
   Avatar,
@@ -50,13 +51,19 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 export default function Sidebar({ children }: { children: ReactNode }) {
+  const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const hidden = location.pathname === "/login"||location.pathname==="/forgot" ||location.pathname==="/reset";
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent onClose={() => onClose} display={{ base: "none", md: "block" }} />
+      <SidebarContent
+        onClose={() => onClose}
+        display={{ base: "none", md: "block" }}
+        hidden={hidden}
+      />
       <Drawer
         autoFocus={false}
-        isOpen={isOpen}
+        isOpen={isOpen && hidden}
         placement="left"
         onClose={onClose}
         returnFocusOnClose={false}
@@ -67,8 +74,8 @@ export default function Sidebar({ children }: { children: ReactNode }) {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      <MobileNav onOpen={onOpen} hidden={hidden} />
+      <Box ml={{ base: 0, md: hidden ? 0 : 60 }} p="4">
         {children}
       </Box>
     </Box>
