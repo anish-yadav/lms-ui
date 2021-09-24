@@ -6,19 +6,35 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FiCheck, FiX } from "react-icons/fi";
 
 export default function Reset() {
-  const [newpassword,setNewPassword] = useState<string>("");
-  const [cnfPassword,setCnfPassword] = useState<string>("");
-  const reset = () =>{
-    console.log(newpassword,cnfPassword);
-  }
+  const [newpassword, setNewPassword] = useState<string>("");
+  const [cnfPassword, setCnfPassword] = useState<string>("");
+
+  const [passMatch, matchPass] = useState<boolean | null>(null);
+
+  const reset = () => {
+    console.log(newpassword, cnfPassword);
+  };
+
+  useEffect(() => {
+    // content
+    if (newpassword === "" || newpassword.trim().length === 0) {
+      matchPass(null);
+    } else {
+      matchPass(cnfPassword === newpassword);
+    }
+  }, [cnfPassword, newpassword]);
+
   return (
     <Flex
       minH={"100vh"}
@@ -36,11 +52,30 @@ export default function Reset() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>New Password</FormLabel>
-              <Input type="password" placeholder="Enter new password" onChange={(e) => setNewPassword(e.target.value)} required/>
+              <Input
+                type="text"
+                placeholder="Enter new password"
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Confirm Password</FormLabel>
-              <Input type="password" placeholder="Confirm new password" onChange={(e) => setCnfPassword(e.target.value)} required/>
+              <InputGroup>
+                <Input
+                  type="text"
+                  placeholder="Confirm new password"
+                  onChange={(e) => setCnfPassword(e.target.value)}
+                  required
+                />
+                {passMatch === null ? (
+                  <></>
+                ) : (
+                  <InputRightElement
+                    children={passMatch ? <FiCheck color={"green"} /> : <FiX color={"red"} />}
+                  />
+                )}
+              </InputGroup>
             </FormControl>
             <Stack spacing={10}>
               <Button
@@ -49,7 +84,7 @@ export default function Reset() {
                 _hover={{
                   bg: "blue.500",
                 }}
-                onClick ={reset}>
+                onClick={reset}>
                 Reset
               </Button>
             </Stack>

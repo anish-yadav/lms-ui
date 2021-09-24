@@ -18,9 +18,12 @@ import { Link as RouterLink } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [passowrd, setPassword] = useState<string>("");
+
   const login = () => {
     console.log(email, passowrd);
   };
+
+
   return (
     <Flex
       minH={"100vh"}
