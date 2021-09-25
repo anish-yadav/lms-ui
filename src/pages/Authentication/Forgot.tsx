@@ -1,24 +1,23 @@
 import {
-  Flex,
   Box,
+  Button,
+  Flex,
   FormControl,
   FormLabel,
-  Input,
-  Checkbox,
-  Stack,
-  Link,
-  Button,
   Heading,
+  Input,
+  Link,
+  Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function Forgot() {
-  const[email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const forgot = () => {
     console.log(email);
-  } 
+  };
   return (
     <Flex
       minH={"100vh"}
@@ -36,10 +35,14 @@ export default function Forgot() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" placeholder="Enter your registered e-mail" onChange = {(e) => setEmail(e.target.value)} required />
+              <Input
+                type="email"
+                placeholder="Enter your registered e-mail"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </FormControl>
             <Stack spacing={10}>
-              
               <Button
                 bg={"blue.400"}
                 color={"white"}

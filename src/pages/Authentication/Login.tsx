@@ -12,17 +12,34 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { NotificationContext } from "../../context/notification";
+import { UserContext } from "../../context/user";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
-  const [passowrd, setPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const login = () => {
-    console.log(email, passowrd);
+  const history = useHistory();
+
+  // to disable the login button when we are trying to login
+  const [logginIn, setLoggingIn] = useState<boolean>(false);
+
+  const { showSuccess, showError } = useContext(NotificationContext);
+  const { login } = useContext(UserContext);
+
+  const tryLogin = async () => {
+    setLoggingIn(true);
+    const loggedIn = await login(email, password);
+    setLoggingIn(false);
+    if (loggedIn) {
+      showSuccess({ title: "Success", description: "logged in successfully" });
+      history.push("/");
+    } else {
+      showError({ title: "Error", description: "email or password mismatch" });
+    }
   };
-
 
   return (
     <Flex
@@ -73,7 +90,8 @@ export default function Login() {
                 _hover={{
                   bg: "blue.500",
                 }}
-                onClick={login}>
+                isLoading={logginIn}
+                onClick={tryLogin}>
                 Sign in
               </Button>
             </Stack>

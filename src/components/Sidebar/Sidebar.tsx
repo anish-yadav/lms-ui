@@ -1,42 +1,41 @@
-import { ReactNode } from "react";
-import { useLocation } from "react-router";
 import {
-  IconButton,
   Avatar,
   Box,
+  BoxProps,
   CloseButton,
-  Flex,
-  HStack,
-  VStack,
-  Icon,
-  useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
-  Text,
-  useDisclosure,
-  BoxProps,
+  Flex,
   FlexProps,
+  HStack,
+  Icon,
+  IconButton,
+  Link,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
+  Text,
   useColorMode,
+  useColorModeValue,
+  useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
-} from "react-icons/fi";
+import { ReactNode, ReactText, useContext } from "react";
 import { IconType } from "react-icons";
-import { ReactText } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import {
+  FiChevronDown,
+  FiCompass,
+  FiHome,
+  FiMenu,
+  FiSettings,
+  FiStar,
+  FiTrendingUp,
+} from "react-icons/fi";
+import { useLocation } from "react-router";
+import { UserContext } from "../../context/user";
 
 interface LinkItemProps {
   name: string;
@@ -53,7 +52,10 @@ const LinkItems: Array<LinkItemProps> = [
 export default function Sidebar({ children }: { children: ReactNode }) {
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const hidden = location.pathname === "/login"||location.pathname==="/forgot" ||location.pathname==="/reset";
+  const hidden =
+    location.pathname === "/login" ||
+    location.pathname === "/forgot" ||
+    location.pathname === "/reset";
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
@@ -75,9 +77,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} hidden={hidden} />
-      <Box ml={{ base: 0, md: hidden ? 0 : 60 }} p="4">
-        {children}
-      </Box>
+      <Box ml={{ base: 0, md: hidden ? 0 : 60 }}>{children}</Box>
     </Box>
   );
 }
@@ -152,7 +152,7 @@ interface MobileProps extends FlexProps {
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { toggleColorMode } = useColorMode();
-  const text = useColorModeValue("dark", "light");
+  const { user } = useContext(UserContext);
   const SwitchIcon = useColorModeValue(FaMoon, FaSun);
   return (
     <Flex
@@ -204,9 +204,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2">
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">{user && user.name}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {user && user.type}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
