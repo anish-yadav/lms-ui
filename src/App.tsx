@@ -1,14 +1,36 @@
-import { ChakraProvider, Text } from "@chakra-ui/react";
-import Login from "./components/Authentication/Login";
+import { ChakraProvider } from "@chakra-ui/react";
+import Login from "./pages/Authentication/Login";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { UserContext, UserProvider } from "./context/user";
+import { UserProvider } from "./context/user";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Forgot from "./pages/Authentication/Forgot";
+import Reset from "./pages/Authentication/Reset";
+import ProtectedRoute from "./components/Authentication/Protected";
+import { NotificationProvider } from "./context/notification";
+import { LoadingProvider } from "./context/loading";
+import { theme } from "./utils/theme/theme";
+
+const HomeComponent = () => {
+  return <h1>Homepage</h1>;
+};
 
 export const App = () => (
-  <ChakraProvider>
-    <UserProvider>
-      <Sidebar>
-        <Login />
-      </Sidebar>
-    </UserProvider>
-  </ChakraProvider>
+  <Router>
+    <ChakraProvider theme={theme}>
+      <LoadingProvider>
+        <NotificationProvider>
+          <UserProvider>
+            <Sidebar>
+              <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/forgot" component={Forgot} />
+                <Route path="/reset" component={Reset} />
+                <ProtectedRoute path="/" component={HomeComponent} />
+              </Switch>
+            </Sidebar>
+          </UserProvider>
+        </NotificationProvider>
+      </LoadingProvider>
+    </ChakraProvider>
+  </Router>
 );
