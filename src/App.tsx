@@ -8,6 +8,7 @@ import Reset from "./pages/Authentication/Reset";
 import ProtectedRoute from "./components/Authentication/Protected";
 import { NotificationProvider } from "./context/notification";
 import { LoadingProvider } from "./context/loading";
+import { theme } from "./utils/theme/theme";
 
 const HomeComponent = () => {
   return <h1>Homepage</h1>;
@@ -15,7 +16,7 @@ const HomeComponent = () => {
 
 export const App = () => (
   <Router>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <LoadingProvider>
         <NotificationProvider>
           <UserProvider>

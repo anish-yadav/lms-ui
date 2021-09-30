@@ -1,4 +1,6 @@
-const Card = {
+import { ComponentStyleConfig, DeepPartial } from "@chakra-ui/react";
+
+const Card: DeepPartial<ComponentStyleConfig> = {
   // The styles all Card have in common
   baseStyle: ({ colorMode }) => ({
     display: "flex",
@@ -10,13 +12,7 @@ const Card = {
 
   variants: {
     sidebar: {
-      paddingTop: 8,
-      paddingLeft: 4,
-      paddingRight: 4,
-      boxShadow: "xl",
-      width: "250px",
-      position: "fixed",
-      height: "100vh",
+      backgorund: "red",
     },
     smooth: {
       padding: 6,
@@ -40,8 +36,10 @@ const Card = {
       padding: 4,
       borderRadius: "md",
       width: "100%",
-      cursor: "pointer",
+      cursor: "spinner",
       fontWeight: "400",
+      color: "red",
+      bacgroundColor: "red",
     }),
     navActive: ({ colorMode }) => ({
       display: "flex",
@@ -159,10 +157,38 @@ const Menu = {
   },
 };
 
+const Link: DeepPartial<ComponentStyleConfig> = {
+  baseStyle: {
+    color: "gray.500",
+    fontSize: 14,
+    textDecorationLine: "none !important",
+    border: "2px solid transparent",
+    display: "block",
+    fontWeight: 400,
+  },
+  variants: {
+    default: {},
+    nav: ({ colorMode }) => ({
+      _hover: {
+        color: "blue.400",
+        borderRight: "4px solid #4299e1",
+      },
+    }),
+    navActive: ({ colorMode }) => ({
+      color: "blue.400",
+      borderRight: "4px solid #4299e1",
+    }),
+  },
+  defaultProps: {
+    variant: "default",
+  },
+};
+
 export const components = {
   Card,
   Text,
   Input,
   MenuButton,
   Menu,
+  Link,
 };
