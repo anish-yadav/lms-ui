@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/Authentication/Protected";
 import { NotificationProvider } from "./context/notification";
 import { LoadingProvider } from "./context/loading";
 import { theme } from "./utils/theme/theme";
+import Manage from "./pages/Manage/Index";
 
 const HomeComponent = () => {
   return <h1>Homepage</h1>;
@@ -25,7 +26,8 @@ export const App = () => (
                 <Route path="/login" component={Login} />
                 <Route path="/forgot" component={Forgot} />
                 <Route path="/reset" component={Reset} />
-                <ProtectedRoute path="/" component={HomeComponent} />
+                <ProtectedRoute path="/" exact={true} component={HomeComponent} />
+                <ProtectedRoute paht="/manage" component={Manage} />
               </Switch>
             </Sidebar>
           </UserProvider>
