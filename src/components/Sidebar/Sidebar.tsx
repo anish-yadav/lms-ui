@@ -66,9 +66,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <Box ml={{ base: 0, md: hidden ? 0 : 48 }} p="2">
-        {children}
-      </Box>
+      <Box ml={{ base: 0, md: hidden ? 0 : 48 }}>{children}</Box>
     </Box>
   );
 }

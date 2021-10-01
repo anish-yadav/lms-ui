@@ -60,7 +60,7 @@ const Card: DeepPartial<ComponentStyleConfig> = {
   },
 };
 
-const Text = {
+const Text: DeepPartial<ComponentStyleConfig> = {
   // The styles all Card have in common
   baseStyle: {
     fontSize: "12px",
@@ -86,7 +86,7 @@ const Text = {
   },
 };
 
-const Input = {
+const Input: DeepPartial<ComponentStyleConfig> = {
   // The styles all Card have in common
   baseStyle: {
     fontSize: "12px",
@@ -103,10 +103,20 @@ const Input = {
         color: `text.${colorMode}.primary`,
       },
     }),
+    default: ({ colorMode }) => ({
+      field: {
+        height: "40px",
+        borderRadius: "md",
+        background: `background.${colorMode}.1`,
+        padding: 2,
+        paddingLeft: 4,
+        color: `text.${colorMode}.primary`,
+      },
+    }),
   },
   // The default variant value
   defaultProps: {
-    variant: "search",
+    variant: "default",
   },
 };
 
