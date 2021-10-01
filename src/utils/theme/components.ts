@@ -28,30 +28,25 @@ const Card: DeepPartial<ComponentStyleConfig> = {
       justifyContent: "center",
       alignItems: "center",
     }),
-    nav: ({ colorMode }) => ({
-      display: "flex",
-      flexDirection: "row",
+    itemCard: ({ colorMode }) => ({
+      background: `background.${colorMode}.card`,
+      width: "200px",
+      marginRight: 8,
+      borderRadius: "sm",
+      boxShadow: "md",
+      textAlign: "center",
       alignItems: "center",
-      justifyContent: "flex-start",
-      padding: 4,
-      borderRadius: "md",
-      width: "100%",
-      cursor: "spinner",
-      fontWeight: "400",
-      color: "red",
-      bacgroundColor: "red",
+      padding: "10px 0",
+      border: "2px solid #fff",
+      _hover: {
+        boxShadow: "lg",
+        cursor: "pointer",
+        border: "2px solid #4299e1",
+      },
     }),
-    navActive: ({ colorMode }) => ({
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "flex-start",
-      padding: 4,
-      borderRadius: "md",
-      background: `background.${colorMode}.1`,
-      width: "100%",
-      cursor: "pointer",
-      fontWeight: "600",
+    cardImg: ({ colorMode }) => ({
+      width: "200px",
+      height: "150px",
     }),
   },
   // The default variant value
@@ -70,8 +65,14 @@ const Text: DeepPartial<ComponentStyleConfig> = {
       color: `text.${colorMode}.primary`,
       fontSize: "16px",
     }),
+    heading: ({ colorMode }) => ({
+      color: `text.${colorMode}.primary`,
+      fontSize: 24,
+      fontWeight: "400",
+      marginBottom: 2,
+    }),
     secondary: ({ colorMode }) => ({
-      color: `text.${colorMode}.secondary`,
+      color: "gray.500",
       fontSize: "16px",
     }),
     active: ({ colorMode }) => ({
@@ -96,11 +97,12 @@ const Input: DeepPartial<ComponentStyleConfig> = {
       field: {
         height: "40px",
         borderRadius: "md",
-        width: "600px",
-        background: `background.${colorMode}.1`,
+        width: "100%",
+        background: `background.${colorMode}.card`,
         padding: 2,
         paddingLeft: 10,
         color: `text.${colorMode}.primary`,
+        fontSize: 14,
       },
     }),
     default: ({ colorMode }) => ({
@@ -183,11 +185,37 @@ const Link: DeepPartial<ComponentStyleConfig> = {
         color: "blue.400",
         borderRight: "4px solid #4299e1",
       },
+      _focus: {
+        outline: "none",
+        boxShadow: "none",
+      },
     }),
     navActive: ({ colorMode }) => ({
       color: "blue.400",
       borderRight: "4px solid #4299e1",
+      _focus: {
+        outline: "none",
+        boxShadow: "none",
+      },
     }),
+  },
+  defaultProps: {
+    variant: "default",
+  },
+};
+
+const Button: DeepPartial<ComponentStyleConfig> = {
+  baseStyle: {
+    background: "blue.400",
+  },
+  variants: {
+    default: {
+      background: "blue.400",
+      color: "white",
+      fontSize: 14,
+      fontWeight: "400",
+      padding: "0px 40px",
+    },
   },
   defaultProps: {
     variant: "default",
@@ -201,4 +229,5 @@ export const components = {
   MenuButton,
   Menu,
   Link,
+  Button,
 };

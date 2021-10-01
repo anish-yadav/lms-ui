@@ -28,7 +28,7 @@ export const customColors = {
   },
   text: {
     light: {
-      primary: "#1A3B34",
+      primary: "#777777",
       secondary: "#AAACB7",
       white: "white",
     },

@@ -19,8 +19,8 @@ import {
   FiCompass,
   FiHome,
   FiLogOut,
+  FiServer,
   FiSettings,
-  FiStar,
   FiTrendingUp,
   FiUser,
 } from "react-icons/fi";
@@ -35,7 +35,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Home", icon: FiHome, to: "/" },
   { name: "Trending", icon: FiTrendingUp, to: "/course" },
   { name: "Explore", icon: FiCompass, to: "/message" },
-  { name: "Favourites", icon: FiStar, to: "/chats" },
+  { name: "Manage", icon: FiServer, to: "/manage" },
   { name: "Settings", icon: FiSettings, to: "/404" },
 ];
 
