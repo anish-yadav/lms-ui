@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../types/user";
 
-const ENPDOINT = process.env.REACT_APP_API_ENDPOINT;
-
-const LOGIN_URL = `${ENPDOINT}/users/login`;
-const ME_URL = `${ENPDOINT}/users/me`;
+// const ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+const ENDPOINT = "http://localhost:8080/api/v1";
+const LOGIN_URL = `${ENDPOINT}/users/login`;
+const ME_URL = `${ENDPOINT}/users/me`;
+const REQUEST_RESET_URL = `${ENDPOINT}/users/request-password-reset`;
+const PWD_RESET_URL = `${ENDPOINT}/users/reset-password`;
 
 interface ResponseType {
   error: string;
@@ -52,4 +54,25 @@ export const getMe = async (token: string): Promise<LoginResponse> => {
     error: data.error,
     data: data.data,
   };
+};
+
+export const requestResetPassword = async (email: string): Promise<boolean> => {
+  const reqData = { email };
+  const { status, data } = await api.post<any, any>(REQUEST_RESET_URL, reqData);
+  if (status === 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const resetPassword = async (newPassword: string, token: string): Promise<boolean> => {
+  const reqData = { newPassword };
+  const { status } = await api.post<any, any>(PWD_RESET_URL, reqData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (status === 200) return true;
+  else return false;
 };

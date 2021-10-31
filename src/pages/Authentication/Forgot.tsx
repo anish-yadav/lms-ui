@@ -6,17 +6,27 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { NotificationContext } from "../../context/notification";
+import { requestResetPassword } from "../../service/user";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");
-  const forgot = () => {
-    console.log(email);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { showSuccess, showError } = useContext(NotificationContext);
+  const forgot = async () => {
+    setLoading(true);
+    const isErr = await requestResetPassword(email);
+    if (!isErr) {
+      showError({ title: "Error", description: "failed to request reset" });
+    } else {
+      showSuccess({ title: "Success", description: "check your email for confirmation" });
+    }
+    setLoading(false);
   };
   return (
     <Flex
@@ -26,9 +36,9 @@ export default function Forgot() {
       bg={useColorModeValue("gray.50", "gray.800")}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Reset your Password</Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+          <Heading fontSize={"4xl"}>Enter you mail address</Heading>
+          <Text textAlign={"center"} fontSize={"lg"} color={"gray.600"}>
+            we will send you a mail with link to reset <br /> password ✌️
           </Text>
         </Stack>
         <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
@@ -49,7 +59,8 @@ export default function Forgot() {
                 _hover={{
                   bg: "blue.500",
                 }}
-                onClick={forgot}>
+                onClick={forgot}
+                isLoading={loading}>
                 Send Link
               </Button>
             </Stack>

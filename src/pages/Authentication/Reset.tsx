@@ -8,22 +8,49 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiCheck, FiX } from "react-icons/fi";
+import { useHistory } from "react-router-dom";
+import { NotificationContext } from "../../context/notification";
+import { resetPassword } from "../../service/user";
+import { useQuery } from "../../utils/helper";
 
 export default function Reset() {
   const [newpassword, setNewPassword] = useState<string>("");
   const [cnfPassword, setCnfPassword] = useState<string>("");
+  const [resetToken, setToken] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [passMatch, matchPass] = useState<boolean | null>(null);
 
-  const reset = () => {
-    console.log(newpassword, cnfPassword);
+  const { showInfo, showSuccess, showError } = useContext(NotificationContext);
+  const query = useQuery();
+  const history = useHistory();
+
+  const reset = async () => {
+    setLoading(true);
+    const allOk = await resetPassword(newpassword, resetToken);
+    if (allOk) {
+      showSuccess({ title: "success", description: "password reset successfull" });
+      history.push("/login");
+    } else {
+      showError({ title: "error", description: "password reset failed" });
+    }
+    setLoading(false);
+  };
+
+  const fetchToken = () => {
+    const token = query.get("token");
+    console.log(token);
+    if (token === null || token.trim().length === 0) {
+      showInfo({ title: "Warning", description: "reset token not provided" });
+      return;
+    }
+    setToken(token);
   };
 
   useEffect(() => {
@@ -35,6 +62,10 @@ export default function Reset() {
     }
   }, [cnfPassword, newpassword]);
 
+  useEffect(() => {
+    fetchToken();
+  }, []);
+
   return (
     <Flex
       minH={"100vh"}
@@ -45,7 +76,7 @@ export default function Reset() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            to enjoy all of our cool features ✌️
           </Text>
         </Stack>
         <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
@@ -84,6 +115,7 @@ export default function Reset() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                isLoading={loading}
                 onClick={reset}>
                 Reset
               </Button>
